@@ -3,13 +3,13 @@ const { hashPassword, comparePassword } = require("../helpers/hashing/hash");
 const { generateToken } = require("../helpers/jwt/jwt");
 
 exports.clientSignup = async (req, res) => {
-    const { username, company, name, email, password } = req.body;
+    const { username, company, email, password } = req.body;
 
     const hashed = await hashPassword(password);
 
     const { error } = await supabase
         .from("clients")
-        .insert([{ name, company, username, email, password: hashed }]);
+        .insert([{  company, username, email, password: hashed }]);
 
     if (error) return res.status(400).json({ error });
 
